@@ -25,4 +25,30 @@ class Test2Controller extends AppController {
         echo $json;
         return;
     }
+
+    public function create() {
+        $this->autoRender = false;
+        $this->response->withType('json');
+        $tests = TableRegistry::get('Tests');
+        $query = $tests->query();
+        $query->insert(['name', 'aaaa'])
+            ->values([
+                'name' => '佐々木小次郎',
+                'aaaa' => 898
+            ])
+            ->execute();
+    }
+
+    public function update() {
+        $this->autoRender = false;
+        $this->response->withType('json');
+
+        $tests = TableRegistry::get('Tests');
+        $query = $tests->query();
+
+        $query->update()
+            ->set(['name' => 'ティナ・ターナー'])
+            ->where(['id' => 4])
+            ->execute();
+    }
 }
