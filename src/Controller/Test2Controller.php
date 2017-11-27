@@ -29,14 +29,15 @@ class Test2Controller extends AppController {
     public function create() {
         $this->autoRender = false;
         $this->response->withType('json');
+
         $tests = TableRegistry::get('Tests');
-        $query = $tests->query();
-        $query->insert(['name', 'aaaa'])
-            ->values([
-                'name' => '佐々木小次郎',
-                'aaaa' => 898
-            ])
-            ->execute();
+        $test = $tests->newEntity();
+        $test->name = '柏餅';
+        $test->aaaa = 78;
+        $tests->save($test);
+
+        echo $test;
+        return;
     }
 
     public function update() {
@@ -44,11 +45,11 @@ class Test2Controller extends AppController {
         $this->response->withType('json');
 
         $tests = TableRegistry::get('Tests');
-        $query = $tests->query();
+        $test = $tests->get(7);
+        $test->aaaa = 690;
+        $tests->save($test);
 
-        $query->update()
-            ->set(['name' => 'ティナ・ターナー'])
-            ->where(['id' => 4])
-            ->execute();
+        echo json_encode($test);
+        return;
     }
 }
